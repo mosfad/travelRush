@@ -139,20 +139,37 @@ $("#user-city").on("click", function(event) {
     var airportFinderKey = "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055";
     //var queryURL = "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius";
     //var queryURL = "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=-157.895277&lat=21.265600"
-    var queryRapidURL =
-      "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=" +
-      coordLoc.long +
-      "&lat=" +
-      coordLoc.lat;
-    $.ajax({
-      url: queryRapidURL,
-      headers: {
-        "X-RapidAPI-Host": "cometari-airportsfinder-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
-      },
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url:
+        "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=" +
+        coordLoc.long +
+        "&lat=" +
+        coordLoc.lat,
       method: "GET",
-      dataType: "json"
-    }).then(function(response) {
+      headers: {
+        "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
+      }
+    };
+
+    // var queryRapidURL =
+    //   "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=" +
+    //   coordLoc.long +
+    //   "&lat=" +
+    //   coordLoc.lat;
+    // $.ajax({
+    //   url: queryRapidURL,
+    //   headers: {
+    //     "X-RapidAPI-Host": "cometari-airportsfinder-v1.p.rapidapi.com",
+    //     "X-RapidAPI-Key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
+    //   },
+    //   method: "GET",
+    //   dataType: "json"
+    // }).then(function(response) {
+    $.ajax(settings).done(function(response) {
       //response from AirportFinder api.
       console.log("airportFinder" + response);
       var newOpt;
