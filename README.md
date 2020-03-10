@@ -8,6 +8,8 @@ travelRush accepts user inputs- destination address and departure date, and make
 
 ## Instructions
 
+### ![Image of App](https://raw.githubusercontent.com/mosfad/travelRush/master/travelRush_image.JPG)
+
 1. Use the 'Search By' drop down to select how you would like to enter your destination (address or airport)
 2. Select a 'Departure Date(_within the next 5 days_) by clcking in the calendar field
 3. Hit Submit
