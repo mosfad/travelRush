@@ -154,8 +154,9 @@ $("#user-city").on("click", function(event) {
         "x-rapidapi-key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
       },
       error: function(request, status, error) {
-        console.log(request.responseText);
-        console.log(status.code);
+        console.log(request);
+        console.log(status);
+        console.log(error);
         if (status.code === 503) {
           alert("The Server is currently down. Please try again later.");
         }
