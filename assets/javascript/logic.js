@@ -152,6 +152,9 @@ $("#user-city").on("click", function(event) {
       headers: {
         "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
         "x-rapidapi-key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
+      },
+      error: function(request, status, error) {
+        alert(request.responseText);
       }
     };
 
