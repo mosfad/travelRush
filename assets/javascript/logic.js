@@ -281,8 +281,8 @@ $("#user-input").on("click", function(event) {
       .trim().length === 0 ||
     $("#depart-date")
       .val()
-      .trim().length === 0 ||
-    hasChosenAirport === false
+      .trim().length === 0 // ||
+    // hasChosenAirport === false
   ) {
     console.log(
       "exiting the click event to prevent user from submitting incorrect form."
