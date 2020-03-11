@@ -173,78 +173,78 @@ $("#user-city").on("click", function(event) {
     //   method: "GET",
     //   dataType: "json"
     // }).then(function(response) {
-    $.ajax(settings).done(function(response) {
-      //response from AirportFinder api.
-      console.log("airportFinder" + response);
-      var newOpt;
+    // $.ajax(settings).done(function(response) {
+    //   //response from AirportFinder api.
+    //   console.log("airportFinder" + response);
+    //   var newOpt;
 
-      for (var i = 0; i < response.length; i++) {
-        //console.log("I am inside the for loop....");
+    //   for (var i = 0; i < response.length; i++) {
+    //     //console.log("I am inside the for loop....");
 
-        newOpt = $("<option>");
-        newOpt.text(
-          response[i].city +
-            ", " +
-            queryState +
-            " (" +
-            response[i].name +
-            "-" +
-            response[i].code +
-            ")"
-        );
-        newOpt.addClass("all-airports");
-        newOpt.attr("value", response[i].name);
-        newOpt.attr("data-city", response[i].city);
-        newOpt.attr("data-lat", response[i].location.latitude);
-        newOpt.attr("data-long", response[i].location.longitude);
-        console.log(
-          response[i].city +
-            ", " +
-            queryState +
-            " (" +
-            response[i].name +
-            "-" +
-            response[i].code +
-            ")"
-        );
-        //newAirportOpt.append(newOpt);
-        //  $("#airport-list").text("");
-        //$("#airport-list").append(newAirportOpt);
-        $("#airport-list").append(newOpt);
-      }
-      //separate call for dynamically generated select elements--- Materialize docs
-      $("#airport-list").formSelect();
-      //show input form when user clicks on airport
-      $(".select-wrapper").show();
-    });
+    //     newOpt = $("<option>");
+    //     newOpt.text(
+    //       response[i].city +
+    //         ", " +
+    //         queryState +
+    //         " (" +
+    //         response[i].name +
+    //         "-" +
+    //         response[i].code +
+    //         ")"
+    //     );
+    //     newOpt.addClass("all-airports");
+    //     newOpt.attr("value", response[i].name);
+    //     newOpt.attr("data-city", response[i].city);
+    //     newOpt.attr("data-lat", response[i].location.latitude);
+    //     newOpt.attr("data-long", response[i].location.longitude);
+    //     console.log(
+    //       response[i].city +
+    //         ", " +
+    //         queryState +
+    //         " (" +
+    //         response[i].name +
+    //         "-" +
+    //         response[i].code +
+    //         ")"
+    //     );
+    //     //newAirportOpt.append(newOpt);
+    //     //  $("#airport-list").text("");
+    //     //$("#airport-list").append(newAirportOpt);
+    //     $("#airport-list").append(newOpt);
+    //   }
+    //   //separate call for dynamically generated select elements--- Materialize docs
+    //   $("#airport-list").formSelect();
+    //   //show input form when user clicks on airport
+    //   $(".select-wrapper").show();
+    // });
   });
 });
 
 //change event retrieves and updates the coordinates for the selected airport.
-$("#airport-list").change(function() {
-  console.log("I made it to the airport handler");
-  console.log(
-    "This option was selected: " +
-      $(this)
-        .children(":selected")
-        .html()
-  );
-  var targetOption = $(this).children(":selected");
-  //user has selected an airport, so update flag for whether user selected an airport
-  hasChosenAirport = true;
-  //update coordinates and airport city for the chosen airport
-  coordLoc.lat = targetOption.attr("data-lat");
-  coordLoc.long = targetOption.attr("data-long");
-  destAirport = targetOption.attr("data-city");
-  console.log("Airport user selected is " + targetOption.attr("value"));
-  console.log(
-    "Coordinates for the airport: " +
-      "Latitude = " +
-      coordLoc.lat +
-      " Longitude = " +
-      coordLoc.long
-  );
-});
+// $("#airport-list").change(function() {
+//   console.log("I made it to the airport handler");
+//   console.log(
+//     "This option was selected: " +
+//       $(this)
+//         .children(":selected")
+//         .html()
+//   );
+//   var targetOption = $(this).children(":selected");
+//   //user has selected an airport, so update flag for whether user selected an airport
+//   hasChosenAirport = true;
+//   //update coordinates and airport city for the chosen airport
+//   coordLoc.lat = targetOption.attr("data-lat");
+//   coordLoc.long = targetOption.attr("data-long");
+//   destAirport = targetOption.attr("data-city");
+//   console.log("Airport user selected is " + targetOption.attr("value"));
+//   console.log(
+//     "Coordinates for the airport: " +
+//       "Latitude = " +
+//       coordLoc.lat +
+//       " Longitude = " +
+//       coordLoc.long
+//   );
+// });
 
 //function to run api call for the term parameter passed through on the on click even of user-input
 function callAPI(term) {
