@@ -196,43 +196,45 @@ $("#user-city").on("click", function(event) {
     //   dataType: "json"
     // }).then(function(response) {
     $.ajax(settings).done(function(response) {
-      //response from AirportFinder api.
-      console.log("airportFinder" + response);
+      //response from flightstats api.
+      var airports = response.airports;
       var newOpt;
+      console.log(airports);
 
-      for (var i = 0; i < response.length; i++) {
-        //console.log("I am inside the for loop....");
-
-        newOpt = $("<option>");
-        newOpt.text(
-          response[i].city +
-            ", " +
-            queryState +
-            " (" +
-            response[i].name +
-            "-" +
-            response[i].code +
-            ")"
-        );
-        newOpt.addClass("all-airports");
-        newOpt.attr("value", response[i].name);
-        newOpt.attr("data-city", response[i].city);
-        newOpt.attr("data-lat", response[i].location.latitude);
-        newOpt.attr("data-long", response[i].location.longitude);
-        console.log(
-          response[i].city +
-            ", " +
-            queryState +
-            " (" +
-            response[i].name +
-            "-" +
-            response[i].code +
-            ")"
-        );
-        //newAirportOpt.append(newOpt);
-        //  $("#airport-list").text("");
-        //$("#airport-list").append(newAirportOpt);
-        $("#airport-list").append(newOpt);
+      for (var i = 0; i < airports.length; i++) {
+        //include airports with iata and icao codes.
+        if (airports[i].iata && airports[i].icao) {
+          newOpt = $("<option>");
+          newOpt.text(
+            response[i].city +
+              ", " +
+              queryState +
+              " (" +
+              response[i].name +
+              "-" +
+              response[i].code +
+              ")"
+          );
+          newOpt.addClass("all-airports");
+          newOpt.attr("value", response[i].name);
+          newOpt.attr("data-city", response[i].city);
+          newOpt.attr("data-lat", response[i].location.latitude);
+          newOpt.attr("data-long", response[i].location.longitude);
+          console.log(
+            response[i].city +
+              ", " +
+              queryState +
+              " (" +
+              response[i].name +
+              "-" +
+              response[i].code +
+              ")"
+          );
+          //newAirportOpt.append(newOpt);
+          //  $("#airport-list").text("");
+          //$("#airport-list").append(newAirportOpt);
+          $("#airport-list").append(newOpt);
+        }
       }
       //separate call for dynamically generated select elements--- Materialize docs
       $("#airport-list").formSelect();
