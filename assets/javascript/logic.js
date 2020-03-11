@@ -142,7 +142,7 @@ $("#user-city").on("click", function(event) {
     var flightStatsKey = "9aed868eafdb4063953d7e74f537d585";
     var flightStatId = "3e3a79ea";
     var queryUrl =
-      "https://api.flightstats.com/flex/airports/rest/v1/json/withinRadius/" +
+      "https://cors-anywhere.herokuapp.com/https://api.flightstats.com/flex/airports/rest/v1/json/withinRadius/" +
       coordLoc.lat +
       "/" +
       coordLoc.long +
