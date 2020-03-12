@@ -10,14 +10,13 @@ travelRush accepts user inputs- destination address and departure date, and make
 
 ### ![Image of App](https://raw.githubusercontent.com/mosfad/travelRush/master/travelRush_image.JPG)
 
-1. Use the 'Search By' drop down to select how you would like to enter your destination (address or airport)
-2. Select a 'Departure Date(_within the next 5 days_) by clcking in the calendar field
-3. Hit Submit
-4. Review the initial results and click on the circle icons in each result card to view additional result details.
-5. In order to access your account to track items like favorites and past searches, click the Login button. If you don't have an account click 'Sign Up' and register for an account on travelRush.
-6. Use this test account to see the features available to authenticated users:
-   - test username: _mjacobs@gmail.com_
-   - test password: _123456b_
+1. Start by entering the destination city and state and click on the `AIRPORTS` button.
+2. An input box will appear below the `AIRPORT` button. Click on the box to view a list of airports within 20 miles of destination.
+3. Select the destination airport from the list of airports displayed.
+4. Select a 'Departure Date(_within the next 5 days_) by clcking in the calendar field
+5. Select a 'Return Date(_within the next 5 days_) by clcking in the calendar field
+6. Hit Submit
+7. Review the initial results and click on the circle icons in each result card to view additional result details.
 
 - Notes
   - Please use departure dates within 5 days of the current day.
