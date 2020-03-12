@@ -143,16 +143,16 @@ $("#user-city").on("click", function(event) {
     var flightStatId = "3e3a79ea";
     var queryUrl =
       "https://cors-anywhere.herokuapp.com/https://api.flightstats.com/flex/airports/rest/v1/json/withinRadius/" +
-      coordLoc.lat +
-      "/" +
       coordLoc.long +
+      "/" +
+      coordLoc.lat +
       "/25?appId=" +
       flightStatId +
       "&appKey=" +
       flightStatsKey;
 
     var settings = {
-      async: true,
+      // async: true,
       crossDomain: true,
       url: queryUrl,
       method: "GET",
@@ -199,35 +199,36 @@ $("#user-city").on("click", function(event) {
       //response from flightstats api.
       var airports = response.airports;
       var newOpt;
+      console.log(response);
       console.log(airports);
 
       for (var i = 0; i < airports.length; i++) {
         //include airports with iata and icao codes.
-        if (airports[i].iata && airports[i].icao) {
+        if (airports[i].iata && airports[i].icao && airports[i].faa) {
           newOpt = $("<option>");
           newOpt.text(
-            response[i].city +
+            airports[i].city +
               ", " +
               queryState +
               " (" +
-              response[i].name +
+              airports[i].name +
               "-" +
-              response[i].code +
+              airports[i].iata +
               ")"
           );
           newOpt.addClass("all-airports");
-          newOpt.attr("value", response[i].name);
-          newOpt.attr("data-city", response[i].city);
-          newOpt.attr("data-lat", response[i].location.latitude);
-          newOpt.attr("data-long", response[i].location.longitude);
+          newOpt.attr("value", airports[i].name);
+          newOpt.attr("data-city", airports[i].city);
+          newOpt.attr("data-lat", airports[i].latitude);
+          newOpt.attr("data-long", airports[i].longitude);
           console.log(
-            response[i].city +
+            airports[i].city +
               ", " +
               queryState +
               " (" +
-              response[i].name +
+              airports[i].name +
               "-" +
-              response[i].code +
+              airports[i].iata +
               ")"
           );
           //newAirportOpt.append(newOpt);
@@ -350,7 +351,7 @@ $("#user-input").on("click", function(event) {
 
   //pull object and display as drop down in destination
   database.ref().on("child_added", function(childSnapshot, prevChildKey) {
-    console.log(childSnapshot.val());
+    //console.log(childSnapshot.val());
 
     var destination = childSnapshot.val().destination;
     var departure = childSnapshot.val().departDate;
@@ -632,7 +633,10 @@ $("#user-input").on("click", function(event) {
       var monthDay = moment(listWeather[indicesWeather[j]].dt_txt).format(
         "ddd MMM D"
       );
-      var time = moment(listWeather[indicesWeather[j]].dt_txt).format("h:mm A");
+      //adjusted time to account for different time zones.
+      var time = moment(listWeather[indicesWeather[j]].dt_txt)
+        .add(parseInt(response.city.timezone) / (60 * 60), "hour")
+        .format("h:mm A");
 
       console.log(monthDay);
       var rDay = monthDay + " " + time;
