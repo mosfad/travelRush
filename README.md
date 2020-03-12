@@ -8,7 +8,7 @@ travelRush accepts user inputs- destination address and departure date, and make
 
 ## Instructions
 
-### ![Image of App](https://raw.githubusercontent.com/mosfad/travelRush/master/travelRush_image.JPG)
+### ![Demo](https://raw.githubusercontent.com/mosfad/travelRush/master/travelRush_demo.gif)
 
 1. Start by entering the destination city and state and click on the `AIRPORTS` button.
 2. An input box will appear below the `AIRPORT` button. Click on the box to view a list of airports within 20 miles of destination.
