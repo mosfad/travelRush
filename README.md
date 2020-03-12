@@ -29,7 +29,7 @@ travelRush accepts user inputs- destination address and departure date, and make
 - _jQuery_
 - _Firebase_ as its data base to store user inputs.
 - _OpenWeatherMap API_ to display weather forecast.
-- _AirportFinder API_ to display list of airports within a location.
+- _Flightstats Airport API_ to display list of airports within a location.
 - _Geocoding API_ to get the coordinates of destination.
 - _Yelp API_ to display information about nearby restaurants, hotels and coffee-shops.
 

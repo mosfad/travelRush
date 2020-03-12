@@ -737,7 +737,11 @@ $("#more-weather").on("click", function(event) {
       var monthDay = moment(listWeather[indicesWeather[j]].dt_txt).format(
         "ddd MMM D"
       );
-      var time = moment(listWeather[indicesWeather[j]].dt_txt).format("h:mm A");
+
+      //adjusted time to account for different time zones.
+      var time = moment(listWeather[indicesWeather[j]].dt_txt)
+        .add(parseInt(response.city.timezone) / (60 * 60), "hour")
+        .format("h:mm A");
 
       console.log(monthDay);
       var rDay = monthDay + "    " + time;
