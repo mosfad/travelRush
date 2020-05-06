@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $("select").formSelect();
 
   var min = new Date();
@@ -6,11 +6,11 @@ $(document).ready(function() {
 
   var max = new Date();
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $(".datepicker").datepicker({
       disableWeekends: false,
       minDate: new Date(),
-      maxDate: min
+      maxDate: min,
     });
   });
 });
@@ -20,7 +20,7 @@ var config = {
   apiKey: "AIzaSyAEHiL6iIGeMKpa6X0dKc1F8fv0qXlgks0",
   authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
   databaseURL: "https://travelrush-b1c4f.firebaseio.com/",
-  storageBucket: "gs://travelrush-b1c4f.appspot.com"
+  storageBucket: "gs://travelrush-b1c4f.appspot.com",
 };
 
 firebase.initializeApp(config);
@@ -92,7 +92,7 @@ function createWeatherTable() {
 }
 
 //click event that displays airport options.
-$("#user-city").on("click", function(event) {
+$("#user-city").on("click", function (event) {
   console.log("inside event click to display airports");
   event.preventDefault();
 
@@ -121,8 +121,8 @@ $("#user-city").on("click", function(event) {
   console.log("This is the query URL: " + qURL);
   $.ajax({
     url: qURL,
-    method: "GET"
-  }).then(function(response) {
+    method: "GET",
+  }).then(function (response) {
     console.log(response);
     //Use response from Geocoding API to extract and store the coordinates of the destination.
     coordLoc.lat = response.results[0].geometry.location.lat;
@@ -156,10 +156,10 @@ $("#user-city").on("click", function(event) {
       crossDomain: true,
       url: queryUrl,
       method: "GET",
-      error: function(request, status, error) {
+      error: function (request, status, error) {
         //console.log(request.responseText);
         alert("Server is down! Please try again later.");
-      }
+      },
     };
 
     //   var settings = {
@@ -181,30 +181,29 @@ $("#user-city").on("click", function(event) {
     //   }
     // };
 
-    // var queryRapidURL =
-    //   "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=" +
-    //   coordLoc.long +
-    //   "&lat=" +
-    //   coordLoc.lat;
-    // $.ajax({
-    //   url: queryRapidURL,
-    //   headers: {
-    //     "X-RapidAPI-Host": "cometari-airportsfinder-v1.p.rapidapi.com",
-    //     "X-RapidAPI-Key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055"
-    //   },
-    //   method: "GET",
-    //   dataType: "json"
-    // }).then(function(response) {
-    $.ajax(settings).done(function(response) {
+    var queryRapidURL =
+      "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-radius?radius=50&lng=" +
+      coordLoc.long +
+      "&lat=" +
+      coordLoc.lat;
+    $.ajax({
+      url: queryRapidURL,
+      headers: {
+        "X-RapidAPI-Host": "cometari-airportsfinder-v1.p.rapidapi.com",
+        "X-RapidAPI-Key": "f60e32620bmsh0545e1c4b416f30p1425cdjsn99e5174ad055",
+      },
+      method: "GET",
+      dataType: "json",
+    }).then(function (response) {
+      //$.ajax(settings).done(function(response) {
       //response from flightstats api.
-      var airports = response.airports;
+      var airports = response;
       var newOpt;
-      console.log(response);
       console.log(airports);
 
       for (var i = 0; i < airports.length; i++) {
         //include airports with iata and icao codes.
-        if (airports[i].iata && airports[i].icao && airports[i].faa) {
+        if (airports[i].code) {
           newOpt = $("<option>");
           newOpt.text(
             airports[i].city +
@@ -213,14 +212,14 @@ $("#user-city").on("click", function(event) {
               " (" +
               airports[i].name +
               "-" +
-              airports[i].iata +
+              airports[i].code +
               ")"
           );
           newOpt.addClass("all-airports");
           newOpt.attr("value", airports[i].name);
           newOpt.attr("data-city", airports[i].city);
-          newOpt.attr("data-lat", airports[i].latitude);
-          newOpt.attr("data-long", airports[i].longitude);
+          newOpt.attr("data-lat", airports[i].location.latitude);
+          newOpt.attr("data-long", airports[i].location.longitude);
           console.log(
             airports[i].city +
               ", " +
@@ -228,7 +227,7 @@ $("#user-city").on("click", function(event) {
               " (" +
               airports[i].name +
               "-" +
-              airports[i].iata +
+              airports[i].code +
               ")"
           );
           //newAirportOpt.append(newOpt);
@@ -246,13 +245,10 @@ $("#user-city").on("click", function(event) {
 });
 
 //change event retrieves and updates the coordinates for the selected airport.
-$("#airport-list").change(function() {
+$("#airport-list").change(function () {
   console.log("I made it to the airport handler");
   console.log(
-    "This option was selected: " +
-      $(this)
-        .children(":selected")
-        .html()
+    "This option was selected: " + $(this).children(":selected").html()
   );
   var targetOption = $(this).children(":selected");
   //user has selected an airport, so update flag for whether user selected an airport
@@ -284,29 +280,25 @@ function callAPI(term) {
       coordLoc.long +
       "&limit=10",
     headers: {
-      Authorization: "Bearer " + yelpAPIKey
+      Authorization: "Bearer " + yelpAPIKey,
     },
     method: "GET",
     dataType: "json",
-    success: function(data) {
+    success: function (data) {
       console.log("success: " + data);
       console.log("Yelp URL:" + this.url);
-    }
+    },
   });
 }
 
 //need to add location vars once pulled from search input
 //on click event to capture and store values and run ajax queries
-$("#user-input").on("click", function(event) {
+$("#user-input").on("click", function (event) {
   event.preventDefault();
 
   if (
-    $("#dest-city")
-      .val()
-      .trim().length === 0 ||
-    $("#depart-date")
-      .val()
-      .trim().length === 0 ||
+    $("#dest-city").val().trim().length === 0 ||
+    $("#depart-date").val().trim().length === 0 ||
     hasChosenAirport === false
   ) {
     console.log(
@@ -322,19 +314,9 @@ $("#user-input").on("click", function(event) {
   //store values from form input
   //add var for locationCoord
   var coord = coordLoc;
-  var destination = $("#dest-city")
-    .val()
-    .trim();
-  var departure = moment(
-    $("#depart-date")
-      .val()
-      .trim()
-  ).format("L");
-  var arrival = moment(
-    $("#return-date")
-      .val()
-      .trim()
-  ).format("L");
+  var destination = $("#dest-city").val().trim();
+  var departure = moment($("#depart-date").val().trim()).format("L");
+  var arrival = moment($("#return-date").val().trim()).format("L");
   console.log(destination, departure, arrival);
 
   // Create local "temporary" object for holding input data
@@ -342,7 +324,7 @@ $("#user-input").on("click", function(event) {
     coordinates: coord,
     destination: destination,
     departDate: departure,
-    returnDate: arrival
+    returnDate: arrival,
   };
   console.log("Search Input" + searchInput);
 
@@ -350,7 +332,7 @@ $("#user-input").on("click", function(event) {
   database.ref().push(searchInput);
 
   //pull object and display as drop down in destination
-  database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+  database.ref().on("child_added", function (childSnapshot, prevChildKey) {
     //console.log(childSnapshot.val());
 
     var destination = childSnapshot.val().destination;
@@ -367,7 +349,7 @@ $("#user-input").on("click", function(event) {
   var call2 = callAPI("restaurants");
   var call3 = callAPI("coffee");
 
-  $.when(call1, call2, call3).done(function(v1, v2, v3) {
+  $.when(call1, call2, call3).done(function (v1, v2, v3) {
     // Remove loading thing
     $(".progress").hide();
     $("#all").show();
@@ -383,7 +365,7 @@ $("#user-input").on("click", function(event) {
       url: v1[0].businesses[0].url,
       price: v1[0].businesses[0].price,
       rating: v1[0].businesses[0].rating,
-      title: v1[0].businesses[0].categories[0].title
+      title: v1[0].businesses[0].categories[0].title,
     };
     console.log(hotelsInfo);
 
@@ -400,7 +382,7 @@ $("#user-input").on("click", function(event) {
       url: v2[0].businesses[0].url,
       price: v2[0].businesses[0].price,
       rating: v2[0].businesses[0].rating,
-      title: v2[0].businesses[0].categories[0].title
+      title: v2[0].businesses[0].categories[0].title,
     };
     console.log(restaurantsInfo);
     $("#restaurant-name").text(restaurantsInfo.name);
@@ -416,7 +398,7 @@ $("#user-input").on("click", function(event) {
       url: v3[0].businesses[0].url,
       price: v3[0].businesses[0].price,
       rating: v3[0].businesses[0].rating,
-      title: v3[0].businesses[0].categories[0].title
+      title: v3[0].businesses[0].categories[0].title,
     };
     console.log(coffeeInfo);
 
@@ -435,7 +417,7 @@ $("#user-input").on("click", function(event) {
     var searchTerm = $(this).attr("value");
     console.log(searchTerm);
 
-    $.when(call1, call2, call3).done(function(y1, y2, y3) {
+    $.when(call1, call2, call3).done(function (y1, y2, y3) {
       if (searchTerm == "coffee") {
         console.log("y3", y3);
         //clear div in order to display new card
@@ -584,8 +566,8 @@ $("#user-input").on("click", function(event) {
   //AJAX call to the API
   $.ajax({
     url: queryURL,
-    method: "GET"
-  }).then(function(response) {
+    method: "GET",
+  }).then(function (response) {
     // Create CODE HERE to Log the queryURL
     console.log(queryURL);
     // Create CODE HERE to log the resulting object
@@ -659,7 +641,7 @@ $("#user-input").on("click", function(event) {
 }); // end of function
 
 //click event to display 5 day weather forecast.
-$("#more-weather").on("click", function(event) {
+$("#more-weather").on("click", function (event) {
   //remove text and elements inside weather result div.
   $("#weather-results").empty();
   //create title for the weather forecast
@@ -694,8 +676,8 @@ $("#more-weather").on("click", function(event) {
   //AJAX call to the API
   $.ajax({
     url: queryURL,
-    method: "GET"
-  }).then(function(response) {
+    method: "GET",
+  }).then(function (response) {
     // Create CODE HERE to Log the queryURL
     console.log(queryURL);
     // Create CODE HERE to log the resulting object
